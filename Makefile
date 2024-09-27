@@ -1,4 +1,4 @@
-path_name := 3_dtsled
+path_name := 6_atomic
 cd_path := $(patsubst %,./%,$(path_name))
 
 make_dev:
