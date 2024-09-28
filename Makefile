@@ -1,4 +1,4 @@
-path_name := 6_atomic
+path_name := 7_spinlock
 cd_path := $(patsubst %,./%,$(path_name))
 
 make_dev:
@@ -8,4 +8,3 @@ clean:
 	cd $(cd_path) && make clean
 
 .PHONY : clean make_dev
-	
