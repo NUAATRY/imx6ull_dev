@@ -1,4 +1,4 @@
-path_name := 7_spinlock
+path_name := 8_semaphore
 cd_path := $(patsubst %,./%,$(path_name))
 
 make_dev:
