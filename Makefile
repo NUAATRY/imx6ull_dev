@@ -1,4 +1,4 @@
-path_name := 9_key
+path_name := 10_timer
 cd_path := $(patsubst %,./%,$(path_name))
 
 make_dev:
