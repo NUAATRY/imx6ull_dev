@@ -17,5 +17,16 @@
         "**/*.su":true, 
         "**/*.cmd":true,
         "Documentation":true, 
+    },
+    "files.associations": {
+        "uaccess.h": "c",
+        "cdev.h": "c",
+        "gpio.h": "c",
+        "errno.h": "c",
+        "kernel.h": "c",
+        "io.h": "c",
+        "timer.h": "c",
+        "semaphore.h": "c",
+        "type_traits": "c"
     }
 }
