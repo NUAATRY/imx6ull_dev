@@ -1,4 +1,4 @@
-path_name := 11_irq
+path_name := 12_blockio
 cd_path := $(patsubst %,./%,$(path_name))
 
 make_dev:
