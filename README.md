@@ -24,3 +24,5 @@
 实验12是阻塞实验blockio，之前的实验11按键代码没有做按下后和松开后的处理，在做实验12时对此进行了优化之后再进行的实验;在本实验中我们在中断中添加了一个唤醒程序，在读取函数的地方设置一个等待队列，设置完成后会执行一个切换任务的函数切换到其他任务上，只有发生信号或者在中断里面手动唤醒的情况下才会唤醒此任务继续执行，继续执行后需要把进程从任务队列中删除，等下次执行到对应的位置再创建即可。
 
 实验13是非阻塞实验noblockio，在本实验中我们用户态中轮询访问是否有可读数据，当访问时没有可读数据是会返回超时现象，当访问到有可读数据时即可通过read函数读取到对应的值，当应用程序调用 select 或 poll 函数来对驱动程序进行非阻塞访问的时候，驱动程序 file_operations 操作集中的 poll 函数就会执行。
+
+实验14是异步通信实验，在本实验中我们采用类似中断的方式实现按键的读取，当按键有反映时会在硬件中断中触发kill_fasync(&dev->async_queue,SIGIO,POLL_IN)函数，除此之外还需要在file_operations中配置好.fasync	= imx6uirq_fasync和.release	= imx6uirq_release,应用程序配置好signal(SIGIO,sigio_signal_func)后，while循环可以去做其他的事情，当软件中断发生时，就会自动跳转到对应的回调函数static void sigio_signal_func(int signum)。应用层fcntl的配置和驱动层.fasync和.release的配置具体原因暂时不清楚。

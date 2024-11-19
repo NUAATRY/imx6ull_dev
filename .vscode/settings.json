@@ -27,6 +27,8 @@
         "io.h": "c",
         "timer.h": "c",
         "semaphore.h": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "signal.h": "c",
+        "fcntl.h": "c"
     }
 }
