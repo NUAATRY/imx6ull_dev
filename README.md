@@ -28,3 +28,7 @@
 实验14是异步通信实验，在本实验中我们采用类似中断的方式实现按键的读取，当按键有反映时会在硬件中断中触发kill_fasync(&dev->async_queue,SIGIO,POLL_IN)函数，除此之外还需要在file_operations中配置好.fasync	= imx6uirq_fasync和.release	= imx6uirq_release,应用程序配置好signal(SIGIO,sigio_signal_func)后，while循环可以去做其他的事情，当软件中断发生时，就会自动跳转到对应的回调函数static void sigio_signal_func(int signum)。应用层fcntl的配置和驱动层.fasync和.release的配置具体原因暂时不清楚。
 
 实验15是基于设备树的platform实验，在本实验中我们linux中的platform架构进行驱动的开发，实际上就是给原来的驱动外加了一个platform的皮，其他的节点获取，获取设备号，注册设备，创建设备，创建类都是一样的没有改变，可以详细了解一下platform如何实现device和driver匹配（有四种方式）init之后就会执行probe函数，exit就会执行remove函数。
+
+实验15是基于设备树的platform实验，在本实验中我们linux中的platform架构进行驱动的开发，实际上就是给原来的驱动外加了一个platform的皮，其他的节点获取，获取设备号，注册设备，创建设备，创建类都是一样的没有改变，可以详细了解一下platform如何实现device和driver匹配（有四种方式）init之后就会执行probe函数，exit就会执行remove函数。
+
+实验16是misc杂项实验，在上一个实验platform的基础上，通过misc对dev进一步封装，可以实现一个函数完成获取设备号，注册设备，创建设备，创建类四个函数的功能。

@@ -1,4 +1,4 @@
-path_name := 15_dtsplatform
+path_name := 16_miscbeep
 cd_path := $(patsubst %,./%,$(path_name))
 
 make_dev:
