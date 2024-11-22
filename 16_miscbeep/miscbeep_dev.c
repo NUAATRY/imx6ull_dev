@@ -23,10 +23,12 @@
 #define BEEP_OFF 0
 
 struct beep_dev{
+/*
 	dev_t devid; 
 	struct cdev cdev;
 	struct class *class;
 	struct device *device;
+*/
 	struct device_node *nd;
 	int beep_gpio;
 };
