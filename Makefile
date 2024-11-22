@@ -1,4 +1,4 @@
-path_name := 14_asyncnoti
+path_name := 15_dtsplatform
 cd_path := $(patsubst %,./%,$(path_name))
 
 make_dev:

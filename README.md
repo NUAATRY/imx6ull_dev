@@ -26,3 +26,5 @@
 实验13是非阻塞实验noblockio，在本实验中我们用户态中轮询访问是否有可读数据，当访问时没有可读数据是会返回超时现象，当访问到有可读数据时即可通过read函数读取到对应的值，当应用程序调用 select 或 poll 函数来对驱动程序进行非阻塞访问的时候，驱动程序 file_operations 操作集中的 poll 函数就会执行。
 
 实验14是异步通信实验，在本实验中我们采用类似中断的方式实现按键的读取，当按键有反映时会在硬件中断中触发kill_fasync(&dev->async_queue,SIGIO,POLL_IN)函数，除此之外还需要在file_operations中配置好.fasync	= imx6uirq_fasync和.release	= imx6uirq_release,应用程序配置好signal(SIGIO,sigio_signal_func)后，while循环可以去做其他的事情，当软件中断发生时，就会自动跳转到对应的回调函数static void sigio_signal_func(int signum)。应用层fcntl的配置和驱动层.fasync和.release的配置具体原因暂时不清楚。
+
+实验15是基于设备树的platform实验，在本实验中我们linux中的platform架构进行驱动的开发，实际上就是给原来的驱动外加了一个platform的皮，其他的节点获取，获取设备号，注册设备，创建设备，创建类都是一样的没有改变，可以详细了解一下platform如何实现device和driver匹配（有四种方式）init之后就会执行probe函数，exit就会执行remove函数。

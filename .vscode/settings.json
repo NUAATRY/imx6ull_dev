@@ -29,6 +29,9 @@
         "semaphore.h": "c",
         "type_traits": "c",
         "signal.h": "c",
-        "fcntl.h": "c"
+        "fcntl.h": "c",
+        "of_address.h": "c",
+        "platform_device.h": "c",
+        "of.h": "c"
     }
 }
