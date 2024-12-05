@@ -1,4 +1,4 @@
-path_name := 16_miscbeep
+path_name := 17_ap3216c
 cd_path := $(patsubst %,./%,$(path_name))
 
 make_dev:

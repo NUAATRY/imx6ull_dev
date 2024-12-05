@@ -32,6 +32,7 @@
         "fcntl.h": "c",
         "of_address.h": "c",
         "platform_device.h": "c",
-        "of.h": "c"
+        "of.h": "c",
+        "delay.h": "c"
     }
 }
