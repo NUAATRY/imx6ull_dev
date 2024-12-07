@@ -33,6 +33,7 @@
         "of_address.h": "c",
         "platform_device.h": "c",
         "of.h": "c",
-        "delay.h": "c"
+        "delay.h": "c",
+        "icm20608_dev.h": "c"
     }
 }

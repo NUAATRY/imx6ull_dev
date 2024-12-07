@@ -1,4 +1,4 @@
-path_name := 17_ap3216c
+path_name := 18_icm20608
 cd_path := $(patsubst %,./%,$(path_name))
 
 make_dev:
