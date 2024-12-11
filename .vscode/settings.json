@@ -34,6 +34,9 @@
         "platform_device.h": "c",
         "of.h": "c",
         "delay.h": "c",
-        "icm20608_dev.h": "c"
+        "icm20608_dev.h": "c",
+        "map.h": "c",
+        "touchscreen.h": "c",
+        "irq.h": "c"
     }
 }
