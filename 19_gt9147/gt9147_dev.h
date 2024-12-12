@@ -16,5 +16,9 @@
 #define GT_TP5_REG 		        0X816F	/* 第五个触摸点数据地址   */
 #define MAX_SUPPORT_POINTS      5       /* 最多5点电容触摸 */
 
+#define GT_REG_DATA_WIDTH             8    /* GT911寄存器的位宽 */
+#define BUFFER_SIZE    (GT_REG_DATA_WIDTH * MAX_SUPPORT_POINTS)  /* 读取寄存器时的缓存大小 */
+
+
 #endif // !GT9147_H
 

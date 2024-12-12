@@ -85,7 +85,6 @@ static int gt9147_write_regs(struct gt9147_dev *dev, u16 reg, u8 *buf, u8 len)
     return i2c_transfer(client->adapter, &msg, 1);
 }
 
-
 static irqreturn_t gt9147_irq_handler(int irq, void *dev_id)
 {
     int touch_num = 0;
@@ -93,7 +92,12 @@ static irqreturn_t gt9147_irq_handler(int irq, void *dev_id)
     int id = 0;
     int ret = 0;
     u8 data;
-    u8 touch_data[5];
+    u8 touch_data[BUFFER_SIZE];
+    u16 touch_index = 0;
+    int pos = 0;
+    int report_num = 0;
+    int i;
+    static u16 last_index = 0;
     struct gt9147_dev *dev = dev_id;
     ret = gt9147_read_regs(dev, GT_GSTID_REG, &data, 1);
     if (data == 0x00)  {     // 没有触摸数据，直接返回
@@ -101,26 +105,41 @@ static irqreturn_t gt9147_irq_handler(int irq, void *dev_id)
     } else {                 //统计触摸点数据 
         touch_num = data & 0x0f;
     }
+    if(touch_num) {         //有触摸按下
+        //读取具体的触摸寄存器
+        gt9147_read_regs(dev, GT_TP1_REG, touch_data, BUFFER_SIZE);
+        id = touch_data[0];
+        touch_index |= (0x01<<id);
+        for(i = 0;i < 5; i++){
+            if(touch_index |= (0x01 << i)){
+                input_x  = touch_data[pos + 1] | (touch_data[pos + 2] << 8);
+                input_y  = touch_data[pos + 3] | (touch_data[pos + 4] << 8);
 
-    // 由于GT9147没有硬件检测每个触摸点按下和抬起，因此每个触摸点的抬起和按
-    // 下不好处理，尝试过一些方法，但是效果都不好，因此这里暂时使用单点触摸 
-    if(touch_num) {         //单点触摸按下
-        gt9147_read_regs(dev, GT_TP1_REG, touch_data, 5);
-        id = touch_data[0] & 0x0F;
-        if(id == 0) {
-            input_x  = touch_data[1] | (touch_data[2] << 8);
-            input_y  = touch_data[3] | (touch_data[4] << 8);
-
-            input_mt_slot(dev->input, id);
-		    input_mt_report_slot_state(dev->input, MT_TOOL_FINGER, true);
-		    input_report_abs(dev->input, ABS_MT_POSITION_X, input_x);
-		    input_report_abs(dev->input, ABS_MT_POSITION_Y, input_y);
+                input_mt_slot(dev->input, id); //产生ABS_MT_SLOT 事件 报告是哪个触摸点的坐标 
+		        input_mt_report_slot_state(dev->input, MT_TOOL_FINGER, true); // 指定手指触摸  连续触摸
+		        input_report_abs(dev->input, ABS_MT_POSITION_X, input_x);  // 上报触摸点坐标信息 
+		        input_report_abs(dev->input, ABS_MT_POSITION_Y, input_y);  // 上报触摸点坐标信息
+                report_num++;
+                if(report_num < touch_num){
+                    pos += 8;
+                    id = touch_data[pos];
+                    touch_index |= (0x01<<id);
+                }
+            }
+            else{
+                input_mt_slot(dev->input, i);
+                input_mt_report_slot_state(dev->input, MT_TOOL_FINGER, false);   // 关闭手指触摸 
+            }
         }
-    } else if(touch_num == 0){                // 单点触摸释放
-        input_mt_slot(dev->input, id);
-        input_mt_report_slot_state(dev->input, MT_TOOL_FINGER, false);
+    } else if(last_index){                // 触摸释放
+        for(i = 0;i < 5; i++){
+            if(last_index & (0x01 << i)){
+                input_mt_slot(dev->input, i);
+                input_mt_report_slot_state(dev->input, MT_TOOL_FINGER, false);
+            }
+        }
     }
-
+    last_index = touch_index;
 	input_mt_report_pointer_emulation(dev->input, true);
     input_sync(dev->input);
 
