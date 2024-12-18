@@ -1,4 +1,4 @@
-path_name := 19_gt9147
+path_name := 20_regmap
 cd_path := $(patsubst %,./%,$(path_name))
 
 make_dev:
