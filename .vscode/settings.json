@@ -37,6 +37,7 @@
         "icm20608_dev.h": "c",
         "map.h": "c",
         "touchscreen.h": "c",
-        "irq.h": "c"
+        "irq.h": "c",
+        "be_byteshift.h": "c"
     }
 }

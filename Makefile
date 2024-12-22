@@ -1,4 +1,4 @@
-path_name := 20_regmap
+path_name := 21_iio
 cd_path := $(patsubst %,./%,$(path_name))
 
 make_dev:
